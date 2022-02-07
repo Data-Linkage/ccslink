@@ -22,7 +22,7 @@ sparkSession.conf.set('spark.sql.codegen.wholeStage', 'false')
 YEAR, MONTH, DAY =  '2021', '11', '16'
 
 # Read in CCS person data
-cen = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/census_residents/census_residents.csv'.format(YEAR, MONTH, DAY), header = True)
+cen = sparkSession.read.csv('some_path' + '/census_residents.csv'.format(YEAR, MONTH, DAY), header = True)
 
 # Select columns
 cen = cen.selectExpr('resident_id as id', 'qid', 'response_id', 'residence_type', 'ce_id', 'household_id as hh_id', 'first_name', 'middle_name', 'last_name',
@@ -83,7 +83,7 @@ cen = cen.withColumn('fullname_ns', PF.clean_names_nospace(cen.fullname))
 cen = cen.withColumn('alphaname', PF.alpha_udf(cen.fullname_ns))
 
 # Nickname lookup
-lookup = sparkSession.read.csv('/dap/landing_zone/ons/nickname_lookup/v1/nickname_dictionary_Oct_2019.csv', header = True).selectExpr('in_name as fn1', 'out_name as fn1_nickname')
+lookup = sparkSession.read.csv('some_path' + 'nickname_dictionary.csv', header = True).selectExpr('in_name as fn1', 'out_name as fn1_nickname')
 
 # Create FN1 nickname column
 cen = cen.join(lookup, on = 'fn1', how = 'left')
@@ -132,7 +132,7 @@ for variable in ['day', 'mon', 'year', 'dob', 'age']:
 # ------------------------------------------------------------------------------------------------------------------- #  
 
 # Read in geography data from questionnaire table
-cen_geo = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/census_questionnaires/census_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
+cen_geo = sparkSession.read.csv('some_path' + 'census_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
 cen_geo = cen_geo.select('response_id', 'display_address', 'address_raw', 'address', 'address_postcode', 'uprn').drop_duplicates()
 
 # Replace -9 & -8 with None

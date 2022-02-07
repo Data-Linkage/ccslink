@@ -14,7 +14,7 @@ setup(
       'numpy==1.16.2',
       'jellyfish==0.8.2',
       'pyjarowinkler==1.8',
-      'nltk==3.6.2',
+      'nltk==3.6.6',
       'networkx==2.5.1',
       'requests==2.13.0',
       'importlib>=1.0.4',

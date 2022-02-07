@@ -39,11 +39,11 @@ def FILE_PATH(string, csv=None):
     
     # Parquet / CSV
     if csv is None:
-      file_path = '/dapsen/workspace_zone/collaborative_method_matching/{}/{}/{}/{}.parquet'.format(
+      file_path = 'some_path' + '/collaborative_method_matching/{}/{}/{}/{}.parquet'.format(
           Y, M, D, string)
       
     else:
-      file_path = '/dapsen/workspace_zone/collaborative_method_matching/{}/{}/{}/{}.csv'.format(
+      file_path = 'some_path' + '/collaborative_method_matching/{}/{}/{}/{}.csv'.format(
           Y, M, D, string)
       
     return file_path

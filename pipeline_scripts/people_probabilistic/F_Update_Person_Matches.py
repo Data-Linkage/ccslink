@@ -22,28 +22,16 @@ MATCHES = sparkSession.read.parquet(FILE_PATH('Stage_5_All_Matches_Pre_Clerical'
 # ----- RELOAD PATHS ------ #
 # ------------------------- #
 
-# File paths of extra person decisions made in the CMS
-paths = ['/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/08/16/16/residents_match/*.csv',         # All CRZ matches after resolving conflicts
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/08/16/17/residents_match/*.csv',         # Extra CRZ matches after resident name fix
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/08/27/30/householdsppl_match/ab/*.csv',  # Households AB person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/09/02/37/householdsppl_match/cd/*.csv',  # Households CD (1) person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/09/02/38/householdsppl_match/cd/*.csv',  # Households CD (2) person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/10/27/113/residents_match/*.csv',        # V16: All CRZ matches after resolving conflicts
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/11/02/123/householdsppl_match/ab/*.csv', # V16: Households AB person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/11/08/125/householdsppl_match/cd/*.csv', # V16: Households CD person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/11/17/134/residents_match/*.csv',        # V20: All CRZ matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/11/22/139/householdsppl_match/ab/*.csv', # V20: Households AB person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/11/23/140/householdsppl_match/cd/*.csv', # V20: Households CD person matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/12/08/155/residents_match/*.csv',        # V20: Presearch matches
-         '/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms_outputs/2021/12/09/159/householdsppl_match/cd/*.csv'] # V20: Households EF person matches
+# File paths of extra person decisions made during clerical matching
+paths = []
 
 # ------------------------- #
-# ----- CMS DECISIONS ----- #
+# -- CLERICAL DECISIONS --- #
 # ------------------------- #
 
 # --- Combine all decisions from CMS across all loads --- #
 
-# Empty dataset to append all decisions made in CMS
+# Empty dataset to append all decisions made during clerical matching
 DECISIONS = sparkSession.createDataFrame([], StructType([StructField("id_ccs", StringType(), True),
                                                          StructField("id_cen", StringType(), True),
                                                          StructField("match_status", IntegerType(), True),
@@ -94,7 +82,7 @@ MATCHES_UPDATED = MATCHES_UPDATED.drop_duplicates(["id_cen", "id_ccs"])
 # --- DELETE REJECTED MATCHES --- #
 # ------------------------------- #
   
-# If any rejected CMS matches also exist in our set of person matches, remove them
+# If any rejected clerical matches also exist in our set of person matches, remove them
 MATCHES_UPDATED = MATCHES_UPDATED.join(REJECTED.withColumn('Join', lit(1)), on = ['id_cen', 'id_ccs'], how = 'left')
 MATCHES_UPDATED = MATCHES_UPDATED.filter(col('Join').isNull()).drop('Join')
 

@@ -58,8 +58,8 @@ for score in list(reversed(list(np.arange(min_score, max_score + 1, 0.5)))):
 df['SCORE_MAX'] = df['SCORE_MAX'].astype(float)
 df = df.sort_values(['SCORE_MAX'], ascending = False)
 
-# Save csv for R 
-df.to_csv('/home/cdsw/collaborative_method_matching/pipeline_scripts/E_People_Probabilistic/99_Data.csv')
+# Save csv for plots to derive threshold
+df.to_csv('some_path/Data.csv')
 
 # Convert to Spark DF and save data for clerical
 df = sparkSession.createDataFrame(df)

@@ -43,7 +43,7 @@ print("the number of clusters to be ingested to the CMS is " + str(QA.agg({"Clus
 # --------- SAVE ---------- #
 # ------------------------- #
 
-# Save for Kainos (_QA added to file name)
-QA.write.mode("overwrite").csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/' + datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)
+# Save for clerical matching (_QA added to file name)
+QA.write.mode("overwrite").csv('some_path' + datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)
 
 sparkSession.stop()

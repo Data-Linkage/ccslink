@@ -11,7 +11,7 @@ setup(
     install_requires=[
       'pip==21.1.3',
       'pandas==0.24.2',
-      'numpy==1.16.2',
+      'numpy==1.21.0',
       'jellyfish==0.8.2',
       'pyjarowinkler==1.8',
       'nltk==3.6.2',

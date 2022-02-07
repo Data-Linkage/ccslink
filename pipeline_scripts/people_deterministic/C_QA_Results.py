@@ -87,5 +87,5 @@ df = cen.unionByName(ccs).sort(asc('Cluster_Number'))
 print("the number of rows to be ingested to the CMS is " + str(df.count()))
 print("the number of clusters to be ingested to the CMS is " + str(QA.selectExpr('max(Cluster_Number) as Max_Cluster_Number').first().Max_Cluster_Number))
 
-# Save for CMS
-df.write.mode("overwrite").csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/'+ datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)
+# Save for clerical matching
+df.write.mode("overwrite").csv('some_path'+ datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)

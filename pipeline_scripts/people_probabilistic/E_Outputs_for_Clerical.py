@@ -23,7 +23,7 @@ clerical.count()
 # ------- RELOADS -------- #
 # ------------------------ #
 
-# --- If we want to send Kainos an updated set of individual matches, we need to remove any pairs where a decision has already been made in the CMS --- #
+# --- If we want to send an updated set of individual matches for clerical matching, we need to remove any pairs where a decision has already been made --- #
 
 # Already given status in previous CMS loads
 DECISIONS = sparkSession.read.parquet(FILE_PATH('Stage_5_CMS_Decisions')).select('id_ccs', 'id_cen')
@@ -57,6 +57,6 @@ print("the number of clusters to be ingested to the CMS is " + str(df.selectExpr
 df.write.mode('overwrite').parquet(FILE_PATH('Stage_5_Clerical_Matches_Cluster_No'))
 
 # Save for Kainos
-df.write.mode("overwrite").csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/'+ datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)
+df.write.mode("overwrite").csv('some_path'+ datetime.date.today().strftime("%Y/%m/%d") + '/matching_algorithm_outputs/residents_match/01_PPL_Matches.csv', header = True)
 
 sparkSession.stop()

@@ -22,7 +22,7 @@ sparkSession.conf.set('spark.sql.codegen.wholeStage', 'false')
 YEAR, MONTH, DAY =  '2021', '11', '16'
 
 # Read in CEN HH data
-cen = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/census_households/census_households.csv'.format(YEAR, MONTH, DAY), header = True).persist()
+cen = sparkSession.read.csv('some_path' + 'census_households/census_households.csv'.format(YEAR, MONTH, DAY), header = True).persist()
 cen.count()
 
 # Select columns
@@ -33,7 +33,7 @@ cen = cen.selectExpr('qid as qid_cen', 'response_id as response_id_cen', 'househ
 # ------------------------------------------ #  
 
 # CEN Questionnaire data
-cen_q = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/census_questionnaires/census_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
+cen_q = sparkSession.read.csv('some_path' + 'census_questionnaires/census_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
 cen_q = cen_q.selectExpr('response_id as response_id_cen', 'display_address', 'address_raw', 'address', 'address_postcode as pc_cen', 'uprn as uprn_cen').drop_duplicates()
 
 # Replace -9 & -8 with None

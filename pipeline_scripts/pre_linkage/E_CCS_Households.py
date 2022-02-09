@@ -23,7 +23,7 @@ sparkSession.conf.set('spark.sql.codegen.wholeStage', 'false')
 YEAR, MONTH, DAY =  '2021', '11', '16'
 
 # Read in CCS HH data
-ccs = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/ccs_households/ccs_households.csv'.format(YEAR, MONTH, DAY), header = True)
+ccs = sparkSession.read.csv('some_path' + 'ccs_households/ccs_households.csv'.format(YEAR, MONTH, DAY), header = True)
 
 # Select columns
 ccs = ccs.selectExpr('qid as qid_ccs', 'household_id as hh_id_ccs', 'ownership_type as tenure_ccs', 'accommodation_type as typaccom_ccs', 'resident_count as no_resi_ccs',
@@ -36,7 +36,7 @@ ccs.count()
 # ---------------------------------------------------------------------------------- #  
 
 # CCS Questionnaire data
-ccs_q = sparkSession.read.csv('/data/dap/c21_processing_zone/c21_cmatch_hdfs_h/file/cms/census/{}/{}/{}/raw/ccs_questionnaires/ccs_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
+ccs_q = sparkSession.read.csv('some_path' + 'ccs_questionnaires/ccs_questionnaires.csv'.format(YEAR, MONTH, DAY), header = True)
 ccs_q = ccs_q.selectExpr('qid as qid_ccs', 'display_address', 'address', 'address_postcode as pc_ccs', 'uprn as uprn_ccs').drop_duplicates()
 
 # Replace -9 & -8 with None

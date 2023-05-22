@@ -16,7 +16,7 @@ setup(
       'pyjarowinkler==1.8',
       'nltk==3.6.2',
       'networkx==2.5.1',
-      'requests==2.13.0',
+      'requests==2.31.0',
       'importlib>=1.0.4',
       'graphframes-wrapper==0.6.0.0',
       'graphframes==0.6'],
